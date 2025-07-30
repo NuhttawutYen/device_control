@@ -3,7 +3,7 @@ import serial
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
 
 try:
-    arduino = serial.Serial('COM3', 9600, timeout=1)
+    arduino = serial.Serial('COM5', 9600, timeout=1)
 except Exception as e:
     arduino = None
     print("เชื่อมต่อไม่ได้:", e)
@@ -25,7 +25,7 @@ class ArduinoControl(QWidget):
         layout.addWidget(self.btn_off)
 
         self.btn_BLINK = QPushButton("LED BLINK")
-        self.btn_BLINK.clicked.connect(lambda: self.send_command("OFF"))
+        self.btn_BLINK.clicked.connect(lambda: self.send_command("BLINK"))
         layout.addWidget(self.btn_BLINK)
 
         self.setLayout(layout)
