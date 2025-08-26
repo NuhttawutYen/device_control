@@ -7,7 +7,7 @@ from PyQt5.QtGui import QFont, QColor, QPalette
 from PyQt5.QtCore import Qt, QTimer
 
 
-ser = serial.Serial('COM5', 9600, timeout=1)
+ser = serial.Serial('COM3', 9600, timeout=1)
 
 class SensorDisplay(QWidget):
     def __init__(self):
@@ -39,41 +39,6 @@ class SensorDisplay(QWidget):
         """)
         frame_layout = QVBoxLayout()
 
-        # ข้อมูลอุณหภูมิ
-        self.temp_label = QLabel("Temperature: -- °C")
-        self.temp_label.setFont(QFont("Arial", 20))
-        self.temp_label.setAlignment(Qt.AlignCenter)
-
-        # ข้อมูลความชื้น
-        self.hum_label = QLabel("Humidity: -- %")
-        self.hum_label.setFont(QFont("Arial", 20))
-        self.hum_label.setAlignment(Qt.AlignCenter)
-
-        frame_layout.addWidget(self.temp_label)
-        frame_layout.addWidget(self.hum_label)
-        self.data_frame.setLayout(frame_layout)
-
-        layout.addWidget(self.title)
-        layout.addWidget(self.data_frame)
-        self.setLayout(layout)
-
-        # Timer อ่านข้อมูลทุก 2 วินาที
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.read_serial)
-        self.timer.start(2000)
-
-    def read_serial(self):
-        try:
-            if ser.in_waiting:
-                line = ser.readline().decode().strip()
-                if "Temp:" in line and "Hum:" in line:
-                    temp = line.split("Temp:")[1].split(";")[0]
-                    hum = line.split("Hum:")[1]
-                    self.temp_label.setText(f"Temperature: {temp} °C")
-                    self.hum_label.setText(f"Humidity: {hum} %")
-        except Exception as e:
-            self.temp_label.setText("Error reading data")
-            self.hum_label.setText(str(e))
 
 
 # เริ่มต้นโปรแกรม
