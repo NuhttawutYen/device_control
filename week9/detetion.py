@@ -14,8 +14,8 @@ known_face_names = []
 
 # เก็บเป็นอาเรย์ [ไฟล์รูป, ชื่อ]
 people = [
-    ("user.jpg", "Nantapong Arundech"),
-    ("user1.jpg", "Chiraphat Nimanong"),
+    ("1.jpg", "qqq"),
+    ("eee.jpg", "sss"),
 ]
 
 for img_path, name in people:

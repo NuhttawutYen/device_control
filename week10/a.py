@@ -5,7 +5,7 @@ import requests
 ESP32_IP = "192.168.1.123"  # ใส่ IP ESP32 จริง
 
 # โหลดรูปตัวเอง
-my_image = face_recognition.load_image_file("my_face.jpg")
+my_image = face_recognition.load_image_file("eee.jpg")
 my_encoding = face_recognition.face_encodings(my_image)[0]
 
 # เปิดกล้อง

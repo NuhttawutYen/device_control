@@ -9,7 +9,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 # ========================= Serial Manager =========================
 class SerialManager:
-    def __init__(self, port='COM4', baud=9600):
+    def __init__(self, port='COM5', baud=9600):
         self.port = port
         self.baud = baud
         self.ser = None
