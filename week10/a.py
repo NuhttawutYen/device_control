@@ -1,0 +1,40 @@
+import cv2
+import face_recognition
+import requests
+
+ESP32_IP = "192.168.1.123"  # ใส่ IP ESP32 จริง
+
+# โหลดรูปตัวเอง
+my_image = face_recognition.load_image_file("my_face.jpg")
+my_encoding = face_recognition.face_encodings(my_image)[0]
+
+# เปิดกล้อง
+video_capture = cv2.VideoCapture(0)
+
+while True:
+    ret, frame = video_capture.read()
+    rgb_frame = frame[:, :, ::-1]
+
+    face_locations = face_recognition.face_locations(rgb_frame)
+    face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
+
+    for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
+        matches = face_recognition.compare_faces([my_encoding], face_encoding)
+        name = "Unknown"
+
+        if matches[0]:
+            name = "Me"
+            requests.get(f"http://{ESP32_IP}/open")   # เปิด servo
+        else:
+            requests.get(f"http://{ESP32_IP}/close")  # ปิด servo
+
+        # วาดกรอบ + ชื่อ
+        cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
+        cv2.putText(frame, name, (left, top-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+
+    cv2.imshow('Video', frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+video_capture.release()
+cv2.destroyAllWindows()

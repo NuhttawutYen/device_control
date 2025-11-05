@@ -1,10 +1,9 @@
 import sys
 import serial
-
 from  PyQt5.QtWidgets import QApplication,QWidget,QPushButton,QVBoxLayout,QMessageBox
 
 try :
-  arduino = serial.Serial('COM3',9600, timeout=1)
+  arduino = serial.Serial('COM5',9600, timeout=1)
 except Exception as e:
   arduino = None
   print("เชื่อต่อไม่ได้: ",e)
